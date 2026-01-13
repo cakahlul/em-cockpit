@@ -1,0 +1,69 @@
+[package]
+name = "em-cockpit"
+version = "0.1.0"
+description = "The EM Cockpit - A desktop app for Engineering Managers"
+authors = ["EM Cockpit Team"]
+edition = "2021"
+
+[lib]
+name = "em_cockpit_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# Tauri core
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-opener = "2"
+tauri-plugin-global-shortcut = "2"
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
+
+# Security - Keyring for credential storage
+keyring = "3"
+
+# Database - SQLite for caching
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# Date/time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+thiserror = "2"
+anyhow = "1"
+
+# Async traits
+async-trait = "0.1"
+
+# Logging
+log = "0.4"
+env_logger = "0.11"
+
+# UUID generation
+uuid = { version = "1", features = ["v4"] }
+
+# LRU Cache
+lru = "0.12"
+
+# Regex for pattern matching
+regex = "1"
+
+# Base64 encoding
+base64 = "0.22"
+
+# URL encoding
+urlencoding = "2"
+
+[dev-dependencies]
+# Testing
+mockall = "0.13"
+tempfile = "3"

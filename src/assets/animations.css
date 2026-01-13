@@ -1,0 +1,420 @@
+/* ============================================
+   EM Cockpit - Animation System
+   ============================================
+   Smooth micro-interactions and transitions
+   for a polished, responsive user experience.
+*/
+
+/* ============================================
+   Animation Timing Variables
+   ============================================ */
+:root {
+  /* Duration tokens */
+  --duration-instant: 50ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+
+  /* Easing curves */
+  --ease-linear: linear;
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Animation delays for staggered effects */
+  --stagger-delay: 50ms;
+}
+
+/* ============================================
+   Spotlight / Flight Console Animations
+   ============================================ */
+
+/* Spotlight entrance */
+@keyframes spotlight-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Spotlight exit */
+@keyframes spotlight-exit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    filter: blur(4px);
+  }
+}
+
+/* Backdrop fade */
+@keyframes backdrop-fade-in {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(4px); }
+}
+
+@keyframes backdrop-fade-out {
+  from { opacity: 1; backdrop-filter: blur(4px); }
+  to { opacity: 0; backdrop-filter: blur(0); }
+}
+
+.spotlight-animate-enter {
+  animation: spotlight-enter var(--duration-normal) var(--ease-out) forwards;
+}
+
+.spotlight-animate-exit {
+  animation: spotlight-exit var(--duration-fast) var(--ease-in) forwards;
+}
+
+/* ============================================
+   Search Results Animations
+   ============================================ */
+
+/* Result item stagger animation */
+@keyframes result-slide-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.result-item-animate {
+  animation: result-slide-in var(--duration-normal) var(--ease-out) forwards;
+  opacity: 0;
+}
+
+/* Stagger delays for list items */
+.result-item-animate:nth-child(1) { animation-delay: calc(var(--stagger-delay) * 0); }
+.result-item-animate:nth-child(2) { animation-delay: calc(var(--stagger-delay) * 1); }
+.result-item-animate:nth-child(3) { animation-delay: calc(var(--stagger-delay) * 2); }
+.result-item-animate:nth-child(4) { animation-delay: calc(var(--stagger-delay) * 3); }
+.result-item-animate:nth-child(5) { animation-delay: calc(var(--stagger-delay) * 4); }
+.result-item-animate:nth-child(6) { animation-delay: calc(var(--stagger-delay) * 5); }
+.result-item-animate:nth-child(7) { animation-delay: calc(var(--stagger-delay) * 6); }
+.result-item-animate:nth-child(8) { animation-delay: calc(var(--stagger-delay) * 7); }
+
+/* Selection highlight */
+@keyframes selection-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 1px var(--accent), 0 0 8px rgba(51, 119, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(51, 119, 255, 0.5);
+  }
+}
+
+.result-selected {
+  animation: selection-glow 1.5s var(--ease-in-out) infinite;
+}
+
+/* ============================================
+   Status Indicator Animations
+   ============================================ */
+
+/* Pulse animation for status dots */
+@keyframes status-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+/* Urgent pulse for critical status */
+@keyframes status-pulse-urgent {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.9;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+  }
+}
+
+.status-pulse {
+  animation: status-pulse 2s var(--ease-in-out) infinite;
+}
+
+.status-pulse-urgent {
+  animation: status-pulse-urgent 1s var(--ease-in-out) infinite;
+}
+
+/* ============================================
+   Stale PR Glow Animation
+   ============================================ */
+
+@keyframes stale-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    border-color: var(--color-amber-500);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(245, 158, 11, 0.3);
+    border-color: var(--color-amber-400);
+  }
+}
+
+.stale-glow {
+  animation: stale-glow 8s var(--ease-in-out) infinite;
+  border: 1px solid var(--color-amber-500);
+}
+
+/* ============================================
+   Loading Animations
+   ============================================ */
+
+/* Spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 0.8s linear infinite;
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--glass-bg) 25%,
+    var(--glass-bg-hover) 50%,
+    var(--glass-bg) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s var(--ease-in-out) infinite;
+}
+
+/* Dots loading */
+@keyframes bounce-dots {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: var(--space-1);
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: bounce-dots 1.2s var(--ease-in-out) infinite;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+.loading-dots span:nth-child(3) { animation-delay: 0s; }
+
+/* ============================================
+   Panel Transitions
+   ============================================ */
+
+/* Slide panel from right */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.panel-slide-in {
+  animation: slide-in-right var(--duration-normal) var(--ease-out) forwards;
+}
+
+.panel-slide-out {
+  animation: slide-out-right var(--duration-fast) var(--ease-in) forwards;
+}
+
+/* ============================================
+   Button & Interactive Animations
+   ============================================ */
+
+/* Button press effect */
+@keyframes button-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.animate-press {
+  animation: button-press var(--duration-fast) var(--ease-out);
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow), 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus ring animation */
+@keyframes focus-ring-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px var(--accent), 0 0 8px var(--accent);
+  }
+}
+
+.focus-ring:focus-visible {
+  animation: focus-ring-pulse 1.5s var(--ease-in-out) infinite;
+}
+
+/* ============================================
+   Toast / Notification Animations
+   ============================================ */
+
+@keyframes toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toast-exit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.toast-enter {
+  animation: toast-enter var(--duration-normal) var(--ease-spring) forwards;
+}
+
+.toast-exit {
+  animation: toast-exit var(--duration-fast) var(--ease-in) forwards;
+}
+
+/* ============================================
+   Counter / Number Animations
+   ============================================ */
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count {
+  animation: count-up var(--duration-fast) var(--ease-out);
+}
+
+/* ============================================
+   Glass Panel Animations
+   ============================================ */
+
+@keyframes glass-appear {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    transform: scale(1);
+  }
+}
+
+.glass-animate {
+  animation: glass-appear var(--duration-normal) var(--ease-out) forwards;
+}
+
+/* ============================================
+   Accessibility: Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .status-pulse,
+  .status-pulse-urgent,
+  .stale-glow,
+  .focus-ring:focus-visible {
+    animation: none !important;
+  }
+}
+
+/* ============================================
+   Performance: GPU Acceleration
+   ============================================ */
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.gpu-accelerate {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
